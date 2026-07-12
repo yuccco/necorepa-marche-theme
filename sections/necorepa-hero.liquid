@@ -1,0 +1,95 @@
+{%- assign fv_photo_url = section.settings.fv_photo | image_url: width: 1800 -%}
+{%- if section.settings.fv_photo == blank -%}
+  {%- assign fv_photo_url = 'fb98559f12f17bab.png' | asset_url -%}
+{%- endif -%}
+
+<section class="hero" aria-label="メインビジュアル">
+  <img class="hero-photo-bg" src="{{ fv_photo_url }}" alt="" aria-hidden="true">
+  <div class="hero-bg">
+    <div class="hero-bg_other"></div>
+    <img src="{{ 'fv_arch.svg' | asset_url }}" class="hero-bg_arch" alt="">
+  </div>
+
+  <div class="hero-content" aria-hidden="false">
+    <div class="hero-content-inner">
+      <div class="hero-logo-wrap">
+        <img src="{{ 'logo-cream.svg' | asset_url }}" alt="ネコリパマルシェ">
+        <div class="hero-sub">
+          <span class="hero-sub-with">with</span>
+          <img class="hero-sub-logo" src="{{ 'logo_nekoichi-cream.svg' | asset_url }}" alt="ネコ市ネコ座">
+        </div>
+      </div>
+      <div class="hero-cta-row">
+        <a href="{{ section.settings.btn_shop_url }}" class="btn-hero" role="button">
+          {{ section.settings.btn_shop_label }}
+          <i class="fa-solid fa-angle-right"></i>
+        </a>
+        <a href="{{ section.settings.btn_register_url }}" class="btn-hero btn-hero-border" role="button">
+          {{ section.settings.btn_register_label }}
+          <i class="fa-solid fa-angle-right"></i>
+        </a>
+      </div>
+    </div>
+    <img src="{{ 'flag_fv.svg' | asset_url }}" alt="お祭りフラッグ" class="hero-flag">
+    <img src="{{ 'logo_necorepa.svg' | asset_url }}" alt="ネコリパブリック" class="hero-logo-necorepa">
+  </div>
+</section>
+
+<section class="hero-mobile" aria-label="メインビジュアル（モバイル）">
+  <img src="{{ 'logo-cream.svg' | asset_url }}" alt="ネコリパマルシェ" class="hero-logo-svg" style="width:280px;height:auto;">
+  <div class="hero-sub">
+    <span class="hero-sub-with">with</span>
+    <img class="hero-sub-logo" src="{{ 'logo_nekoichi-cream.svg' | asset_url }}" alt="ネコ市ネコ座">
+  </div>
+  <span class="hero-mobile-catch">猫を助けるお祭りへ、ようこそ。</span>
+  <div class="hero-cta-col">
+    <a href="{{ section.settings.btn_shop_url }}" class="btn-hero" role="button">
+      {{ section.settings.btn_shop_label }}
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+    <a href="{{ section.settings.btn_register_url }}" class="btn-hero btn-hero-border" role="button">
+      {{ section.settings.btn_register_label }}
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "ネコリパ FV",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "fv_photo",
+      "label": "FV 背景写真（猫ちゃん）"
+    },
+    {
+      "type": "text",
+      "id": "btn_shop_label",
+      "label": "ショップボタン テキスト",
+      "default": "お店を見てまわる"
+    },
+    {
+      "type": "url",
+      "id": "btn_shop_url",
+      "label": "ショップボタン リンク"
+    },
+    {
+      "type": "text",
+      "id": "btn_register_label",
+      "label": "会員登録ボタン テキスト",
+      "default": "会員登録"
+    },
+    {
+      "type": "url",
+      "id": "btn_register_url",
+      "label": "会員登録ボタン リンク"
+    }
+  ],
+  "presets": [
+    {
+      "name": "ネコリパ FV"
+    }
+  ]
+}
+{% endschema %}

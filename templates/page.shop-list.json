@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "shop-list": {
+      "type": "necorepa-shop-list",
+      "settings": {}
+    }
+  },
+  "order": ["shop-list"]
+}

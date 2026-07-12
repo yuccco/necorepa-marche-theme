@@ -1,0 +1,1 @@
+/Users/sekiyamayukiko/Library/CloudStorage/Dropbox/works/ネコリパブリック/サイト/ネコリパマルシェ/html/necorepa-marche-theme/necorepa/AGENTS.md

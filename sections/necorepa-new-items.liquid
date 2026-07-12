@@ -1,0 +1,114 @@
+<section class="new-items" id="category" aria-label="新着アイテム">
+  <div class="new-items-bg-text" aria-hidden="true">
+    NEW ITEM
+    <div class="new-items-bg-text-cat">
+      <img src="{{ '677ba551bd0ba023.png' | asset_url }}" width="300" alt="">
+    </div>
+  </div>
+
+  <div class="new-items-inner">
+    <div class="section-headline-wrap">
+      <div class="section-headline-left">
+        <svg class="section-headline-deco" viewBox="0 0 17.5 35" fill="none" aria-hidden="true">
+          <path d="M 0 17.5 C 0 27.165 7.835 35 17.5 35 L 17.5 0 C 7.835 0 0 7.835 0 17.5 Z" fill="currentColor" fill-rule="nonzero" />
+        </svg>
+        <h2 class="section-headline-text">{{ section.settings.title }}</h2>
+      </div>
+      <a href="{{ routes.collections_url }}" class="section-headline-link">
+        一覧を見る <i class="fa-solid fa-angle-right"></i>
+      </a>
+    </div>
+
+    <div class="items-grid">
+      {%- if section.settings.collection != blank -%}
+        {%- assign items_collection = collections[section.settings.collection] -%}
+      {%- else -%}
+        {%- assign items_collection = collections.all -%}
+      {%- endif -%}
+
+      {%- for product in items_collection.products limit: section.settings.products_to_show -%}
+        <article class="card-item">
+          <a href="{{ product.url }}" aria-label="{{ product.title }}">
+            <div class="card-item-img-outer">
+              <div class="card-item-img-wrap">
+                {%- if product.featured_image -%}
+                  <img
+                    src="{{ product.featured_image | image_url: width: 360 }}"
+                    alt="{{ product.featured_image.alt | escape }}"
+                    width="360"
+                    height="200"
+                    loading="lazy"
+                    style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"
+                  >
+                {%- else -%}
+                  <div class="card-item-photo"></div>
+                {%- endif -%}
+              </div>
+              <div class="card-item-paw" aria-hidden="true">
+                <div class="card-item-paw-inner">
+                  <img src="{{ 'cat-hand.svg' | asset_url }}" alt="" width="116" height="109">
+                </div>
+              </div>
+            </div>
+            <div class="card-item-info">
+              <div class="card-item-pill-wrap">
+                <div class="card-item-pill-icons">
+                  <svg width="11" height="13" viewBox="0 0 11 13" fill="none" style="position:absolute;left:0;top:0;color:var(--cream-dark)" aria-hidden="true">
+                    <path d="M 3.703 3.678 C 4.434 2.182 6.566 2.182 7.297 3.678 L 8.857 6.872 C 9.506 8.201 8.539 9.75 7.06 9.75 L 3.94 9.75 C 2.461 9.75 1.494 8.201 2.143 6.872 L 3.703 3.678 Z" fill="currentColor" fill-rule="nonzero" />
+                  </svg>
+                  <svg width="11" height="13" viewBox="0 0 11 13" fill="none" style="position:absolute;left:11px;top:0;color:var(--cream-dark)" aria-hidden="true">
+                    <path d="M 3.703 3.678 C 4.434 2.182 6.566 2.182 7.297 3.678 L 8.857 6.872 C 9.506 8.201 8.539 9.75 7.06 9.75 L 3.94 9.75 C 2.461 9.75 1.494 8.201 2.143 6.872 L 3.703 3.678 Z" fill="currentColor" fill-rule="nonzero" />
+                  </svg>
+                </div>
+                <div class="card-item-pill">
+                  <span class="card-item-category">{{ product.type | default: 'その他' }}</span>
+                </div>
+              </div>
+              <span class="card-item-name">{{ product.title }}</span>
+              <div class="card-item-price-row">
+                <span class="card-item-price">{{ product.price | money_without_currency }}</span>
+                <span class="card-item-currency">円</span>
+              </div>
+              <span class="card-item-shop">{{ product.vendor }}</span>
+            </div>
+          </a>
+        </article>
+      {%- else -%}
+        <p style="color:var(--brick);padding:20px;">コレクションに商品がありません。</p>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "ネコリパ 新着アイテム",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "セクションタイトル",
+      "default": "新着アイテム"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "表示するコレクション"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "表示件数",
+      "min": 3,
+      "max": 9,
+      "step": 3,
+      "default": 9
+    }
+  ],
+  "presets": [
+    {
+      "name": "ネコリパ 新着アイテム"
+    }
+  ]
+}
+{% endschema %}

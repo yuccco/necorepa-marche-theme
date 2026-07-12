@@ -1,0 +1,15 @@
+{
+  "name": "ヘッダー",
+  "type": "header",
+  "sections": {
+    "necorepa-header": {
+      "type": "necorepa-header",
+      "settings": {
+        "menu": "main-menu"
+      }
+    }
+  },
+  "order": [
+    "necorepa-header"
+  ]
+}

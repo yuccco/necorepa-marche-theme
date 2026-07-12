@@ -1,0 +1,52 @@
+<section class="charity" id="charity" aria-label="保護猫支援について">
+  <div class="charity-cat-wrap" aria-hidden="true">
+    <img src="{{ 'cat_black.png' | asset_url }}" class="charity-cat" alt="">
+  </div>
+  <div class="charity-inner">
+    <img src="{{ 'save-the-cat.png' | asset_url }}" class="charity-image" alt="保護猫の写真">
+    <div class="charity-text">
+      <h2 class="charity-headline">{{ section.settings.headline | newline_to_br }}</h2>
+      <p class="charity-body">{{ section.settings.body | newline_to_br }}</p>
+      <a href="{{ section.settings.btn_url }}" class="btn-charity" role="button">
+        {{ section.settings.btn_label }}
+        <i class="fa-solid fa-angle-right"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "ネコリパ チャリティ",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "headline",
+      "label": "ヘッドライン",
+      "default": "あなたのお買い物が、\n保護猫の毎日をつくる。"
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "本文",
+      "default": "あなたがお買い物をすることで\n保護猫のごはんに、\n医療に、\n暖かい寝床につながります。"
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "label": "ボタンテキスト",
+      "default": "会員登録をする"
+    },
+    {
+      "type": "url",
+      "id": "btn_url",
+      "label": "ボタンリンク"
+    }
+  ],
+  "presets": [
+    {
+      "name": "ネコリパ チャリティ"
+    }
+  ]
+}
+{% endschema %}

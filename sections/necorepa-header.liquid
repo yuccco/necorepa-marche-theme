@@ -1,0 +1,127 @@
+<header id="nav-desktop" {% unless request.page_type == 'index' %}class="is-visible"{% endunless %}>
+  <div class="nav-bar">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <a href="{{ routes.root_url }}">
+          <img src="{{ 'logo-brick.svg' | asset_url }}" alt="ネコリパマルシェ" width="120">
+        </a>
+        <span class="nav-logo-with">with</span>
+        <img src="{{ 'logo_nekoichi-brick.svg' | asset_url }}" alt="ネコ市ネコ座" width="120">
+      </div>
+      <div class="nav-right">
+        <nav class="nav-menu-links" aria-label="メインナビゲーション">
+          {%- for link in linklists[section.settings.menu].links -%}
+            {%- if link.links.size > 0 -%}
+              <div class="nav-item has-dropdown">
+                <a href="{{ link.url }}" class="nav-link">{{ link.title }}</a>
+                <div class="nav-submenu">
+                  {%- for child in link.links -%}
+                    <a href="{{ child.url }}">{{ child.title }}</a>
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- else -%}
+              <div class="nav-item">
+                <a href="{{ link.url }}" class="nav-link">{{ link.title }}</a>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </nav>
+        <div class="nav-icons">
+          <a href="{{ routes.search_url }}" class="nav-icon-btn" aria-label="検索">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </a>
+          <a href="{{ routes.cart_url }}" class="nav-icon-btn" aria-label="カート">
+            <i class="fa-solid fa-cart-shopping"></i>
+            {%- if cart.item_count > 0 -%}
+              <span class="nav-cart-count">{{ cart.item_count }}</span>
+            {%- endif -%}
+          </a>
+          {%- if shop.customer_accounts_enabled -%}
+            <a href="{{ routes.account_url }}" class="nav-icon-btn" aria-label="アカウント">
+              <i class="fa-solid fa-user"></i>
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<header id="nav-mobile" role="banner">
+  <div class="nav-mobile-inner">
+    <div class="nav-logo">
+      <a href="{{ routes.root_url }}">
+        <img src="{{ 'logo-brick.svg' | asset_url }}" alt="ネコリパマルシェ" width="120">
+      </a>
+      <span class="nav-logo-with">with</span>
+      <img src="{{ 'logo_nekoichi-brick.svg' | asset_url }}" alt="ネコ市ネコ座" width="120">
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <a href="{{ routes.cart_url }}" class="nav-icon-btn" aria-label="カート">
+        <i class="fa-solid fa-cart-shopping"></i>
+        {%- if cart.item_count > 0 -%}
+          <span class="nav-cart-count">{{ cart.item_count }}</span>
+        {%- endif -%}
+      </a>
+      <button class="hamburger" aria-label="メニューを開閉する" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <nav class="nav-dropdown" aria-label="モバイルナビゲーション">
+    {%- for link in linklists[section.settings.menu].links -%}
+      {%- if link.links.size > 0 -%}
+        <button class="nav-mobile-parent" aria-expanded="false">
+          {{ link.title }}<span class="nav-mobile-arrow">▾</span>
+        </button>
+        <div class="nav-mobile-children">
+          {%- for child in link.links -%}
+            <a href="{{ child.url }}">{{ child.title }}</a>
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- endif -%}
+    {%- endfor -%}
+  </nav>
+</header>
+
+<div class="nav-mobile-spacer" aria-hidden="true"></div>
+{% unless request.page_type == 'index' %}
+  <div class="nav-desktop-spacer" aria-hidden="true"></div>
+{% endunless %}
+
+{% stylesheet %}
+  .nav-cart-count {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: var(--gold);
+    color: var(--brick);
+    font-size: 10px;
+    font-weight: 700;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+  .nav-icon-btn { position: relative; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "ネコリパ ヘッダー",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "ナビゲーションメニュー",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}

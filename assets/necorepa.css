@@ -1,0 +1,1621 @@
+/* ============================================================
+   ネコリパマルシェ — メインスタイル
+   Design tokens, layout, interactions (no inline styles)
+   ============================================================ */
+
+/* ---------- Design Tokens ---------- */
+:root {
+  /* Dawn の白背景変数を cream に上書き */
+  --color-background: 245, 239, 230;
+
+  /* Dawn のフォント変数を丸ゴに上書き */
+  --font-body-family: "Zen Maru Gothic", "Noto Sans JP", sans-serif;
+  --font-heading-family: "Zen Maru Gothic", "Noto Sans JP", sans-serif;
+  --font-body-weight: 500;
+  --font-heading-weight: 700;
+
+  /* Dawn のボタン角丸を pill 形状に上書き */
+  --buttons-radius: 80px;
+  --buttons-radius-outset: 82px;
+
+  /* Dawn のボタン色を gold/brick に上書き (R,G,B形式) */
+  --color-button: 236, 203, 100;
+  --color-button-text: 107, 20, 39;
+
+  /* Quantity の角丸を pill 形状に上書き */
+  --inputs-radius: 40px;
+  --inputs-radius-outset: 42px;
+  --brick-dark: rgb(82,7,23);
+  --brick:      rgb(107,20,39);
+  --cream-brighter: rgb(241,227,205);
+  --cream-dark: rgb(233,224,210);
+  --cream:      rgb(245,239,230);
+  --gold:       rgb(236,203,100);
+  --gray:       rgb(77,65,67);
+
+  --nav-h-desktop: 90px;
+  --nav-h-mobile:  76px;
+  --nav-h-tablet:  84px;
+  --padding-wrap-mobile: 20px;
+  --padding-wrap-tablet: 40px;
+  --content-max:   1200px;
+  --transition-std: 0.2s ease;
+}
+
+/* ---------- Reset & Base ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* Dawn の div:empty { display:none } を無効化（背景装飾divのため） */
+.hero-bg_other,
+.charity-image,
+.card-item-photo,
+.nav-desktop-spacer,
+.nav-mobile-spacer { display: block !important; }
+
+html { scroll-behavior: smooth; }
+
+body,
+.color-scheme-1,
+.color-scheme-2,
+.color-scheme-3,
+.color-scheme-4,
+.color-scheme-5 {
+  background: var(--cream) !important;
+}
+
+body {
+  font-family: "Zen Maru Gothic", "Noto Sans JP", sans-serif;
+  font-weight: 500;
+  color: var(--gray);
+  overflow-x: hidden;
+}
+
+img { display: block; max-width: 100%; }
+a   { color: var(--brick); text-decoration: none; transition: color var(--transition-std); }
+a:hover { color: var(--gold); }
+
+/* ============================================================
+   NAV — Desktop (slide-in after Hero scroll)
+   ============================================================ */
+#nav-desktop {
+  position: fixed;
+  top: 0; left: 0; width: 100%;
+  z-index: 100;
+  transform: translateY(-100%);
+  transition: transform 0.45s cubic-bezier(0.22,1,0.36,1);
+  display: block;
+}
+#nav-desktop.is-visible { transform: translateY(0); }
+
+.nav-bar {
+  width: 100%;
+  background: var(--cream);
+  border-top: 10px solid var(--brick);
+  box-shadow: 0 4px 16px rgba(35,31,32,0.1);
+  padding: 8px 0 12px;
+}
+.nav-inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 28px;
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  color: var(--brick);
+  flex-shrink: 0;
+  gap: 8px;
+}
+.nav-logo svg { width: 130px; height: auto; color: var(--brick); }
+.nav-logo-with {
+  font-family: "Leckerli One", cursive;
+  font-size: 18px;
+  color: var(--brick);
+  white-space: nowrap;
+}
+
+.nav-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 32px;
+}
+.nav-menu-links {
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  align-items: center;
+}
+.nav-item {
+  position: relative;
+}
+.nav-menu-links a,
+.nav-link {
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--brick);
+  white-space: nowrap;
+  transition: color var(--transition-std);
+}
+.nav-menu-links a:hover,
+.nav-link:hover { color: var(--gold); }
+
+/* Desktop dropdown */
+.nav-submenu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  background: var(--cream);
+  border-top: 4px solid var(--brick);
+  box-shadow: 0 8px 24px rgba(35,31,32,0.12);
+  border-radius: 0 0 12px 12px;
+  padding: 12px 0 8px;
+  min-width: 160px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+  z-index: 200;
+}
+.nav-item.has-dropdown.is-open .nav-submenu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+.nav-submenu a {
+  display: block;
+  padding: 10px 20px;
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--brick);
+  white-space: nowrap;
+  transition: background-color var(--transition-std), color var(--transition-std);
+}
+.nav-submenu a:hover {
+  background: var(--brick);
+  color: var(--cream);
+}
+
+.nav-icons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.nav-icon-btn {
+  background: none; border: none; cursor: pointer;
+  color: var(--brick);
+  font-size: 18px;
+  padding: 4px;
+  transition: color var(--transition-std);
+}
+.nav-icon-btn:hover { color: var(--gold); }
+
+/* ============================================================
+   NAV — Mobile/Tablet (always visible)
+   ============================================================ */
+#nav-mobile {
+  position: fixed;
+  top: 0; left: 0; width: 100%;
+  z-index: 100;
+  background: var(--cream);
+  border-top: 8px solid var(--brick);
+  box-shadow: 0 4px 16px rgba(35,31,32,0.12);
+  display: none;
+}
+.nav-mobile-inner {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  gap: 16px;
+}
+.nav-mobile-logo {
+  font-family: "Leckerli One", cursive;
+  font-weight: 400;
+  font-size: 22px;
+  color: var(--brick);
+  white-space: nowrap;
+}
+
+/* Hamburger button */
+.hamburger {
+  background: none; border: none; cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
+  min-width: 44px; min-height: 44px;
+  align-items: center;
+  justify-content: center;
+}
+.hamburger span {
+  display: block;
+  width: 26px; height: 3px;
+  border-radius: 2px;
+  background: var(--brick);
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+.hamburger.is-open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.hamburger.is-open span:nth-child(2) { opacity: 0; }
+.hamburger.is-open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+/* Mobile dropdown */
+.nav-dropdown {
+  display: none;
+  flex-direction: column;
+  background: var(--cream);
+  border-bottom: 3px solid var(--brick);
+  padding: 8px 20px 20px;
+  gap: 4px;
+}
+.nav-dropdown.is-open { display: flex; }
+.nav-dropdown a {
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--brick);
+  padding: 14px 4px;
+  border-bottom: 1px solid rgba(107,20,39,0.15);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  transition: color var(--transition-std);
+}
+.nav-dropdown a:last-child { border-bottom: none; }
+.nav-dropdown a:hover { color: var(--gold); }
+
+/* Mobile parent button */
+.nav-mobile-parent {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--brick);
+  padding: 14px 4px;
+  border-bottom: 1px solid rgba(107,20,39,0.15);
+  width: 100%;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 44px;
+  transition: color var(--transition-std);
+}
+.nav-mobile-parent:hover { color: var(--gold); }
+.nav-mobile-arrow {
+  transition: transform 0.22s ease;
+  font-style: normal;
+}
+.nav-mobile-parent.is-open .nav-mobile-arrow {
+  transform: rotate(180deg);
+}
+.nav-mobile-children {
+  display: none;
+  flex-direction: column;
+  padding-left: 16px;
+}
+.nav-mobile-children.is-open { display: flex; }
+.nav-mobile-children a {
+  font-size: 16px;
+  padding: 10px 4px;
+  border-bottom: 1px solid rgba(107,20,39,0.08);
+}
+
+/* Spacer pushed by fixed mobile nav */
+.nav-mobile-spacer {
+  display: none;
+  height: var(--nav-h-mobile);
+  flex-shrink: 0;
+}
+
+/* Spacer pushed by fixed desktop nav (non-home pages) */
+.nav-desktop-spacer {
+  display: none;
+  height: var(--nav-h-desktop);
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   HERO (FV)
+   ============================================================ */
+.hero {
+  position: relative;
+  width: 100%;
+  min-width: 1024px;
+  height: auto;
+  overflow: hidden;
+  flex-shrink: 0;
+  border-top: 10px solid var(--gold);
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, var(--brick) 0%, transparent 48%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-bg {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-bg_other {
+  width: 30vw;
+  background-image: var(--asset-fv-bg);
+  background-size: 18%;
+}
+
+.hero-bg_arch {
+  width: 70vw;
+}
+
+/* 1440px visual block pinned to right edge */
+.hero-visual {
+  position: absolute;
+  right: 0; top: 0;
+  width: 1440px; height: 805px;
+  overflow: hidden;
+}
+
+/* Cat photo */
+.hero-photo {
+  position: absolute;
+  left: -644px; top: -403px;
+  width: 2349px; height: 1208px;
+  overflow: hidden;
+}
+.hero-photo-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center right;
+  transform-origin: center center;
+  will-change: transform;
+}
+.hero-bg_other {
+  width: 30vw;
+  background-image: var(--asset-fv-bg);
+  background-size: 18%;
+}
+
+/* Brick wave overlay */
+.hero-wave {
+  position: absolute;
+  left: 644px; top: 402px;
+  width: 1539px; height: 795px;
+  color: var(--brick);
+  pointer-events: none;
+}
+
+/* Diagonal white stripe at bottom-left */
+.hero-stripe {
+  position: absolute;
+  left: -1px; top: 803px;
+  width: 360px; height: 245px;
+  color: var(--brick);
+  pointer-events: none;
+}
+
+/* Hero content (logo + copy + CTA) */
+.hero-content {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+}
+.hero-content-inner {
+  width: 100%;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--padding-wrap-tablet);
+  gap: 40px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.hero-flag {
+  position: absolute;
+  top: -26px;
+  left: -12px;
+}
+
+.hero-logo-necorepa {
+  width: 120px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+/* Logo */
+.hero-logo-wrap {
+  position: relative;
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+.hero-logo-svg {
+  width: 516.249px; height: 296px;
+  color: var(--cream);
+  flex-shrink: 0;
+}
+
+/* "with ネコリパブリック" sub-mark */
+.hero-sub {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  flex-shrink: 0;
+}
+.hero-sub-with {
+  font-family: "Leckerli One", cursive;
+  font-weight: 400;
+  font-size: 34px;
+  color: #fff;
+  white-space: nowrap;
+}
+.hero-sub-brand {
+  color: #fff;
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-weight: 700;
+  font-size: 26px;
+  white-space: nowrap;
+}
+
+/* Hero CTA button */
+.btn-hero {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  padding: 18px 52px;
+  border-radius: 80px;
+  background: var(--gold);
+  border: none;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  font-family: "Noto Sans JP", "Zen Maru Gothic", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--brick);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.18s ease, color 0.18s ease;
+  flex-shrink: 0;
+}
+.btn-hero:hover {
+  background: var(--brick);
+  color: var(--gold);
+}
+.btn-hero svg { color: currentColor; transition: color 0.18s ease; }
+
+/* Outlined hero button ("会員登録") */
+.btn-hero-border {
+  background: transparent;
+  box-shadow: inset 0 0 0 2px var(--brick);
+  color: var(--brick);
+}
+.btn-hero-border:hover {
+  color: var(--gold);
+}
+
+/* Hero CTA wrapper row (desktop) */
+.hero-cta-row {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+/* Hero CTA wrapper column (mobile) */
+.hero-cta-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: stretch;
+  width: 100%;
+  max-width: 340px;
+}
+.hero-cta-col .btn-hero { justify-content: center; }
+
+/* ネコ市ネコ座 logo in hero sub-mark */
+.hero-sub-logo {
+  height: 80px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* "猫を助けるお祭りへ、ようこそ。" mobile catch copy */
+.hero-mobile-catch {
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1.5;
+  color: var(--gold);
+  text-align: center;
+}
+
+/* Hero — Tablet/Mobile version */
+.hero-mobile {
+  display: none;
+  width: 100%;
+  background: var(--brick);
+  padding: 60px 20px 60px;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+.hero-mobile .hero-logo-svg { width: 280px; height: auto; }
+.hero-mobile .hero-sub-with { font-size: 22px; }
+.hero-mobile .btn-hero { font-size: 18px; padding: 14px 36px; }
+
+/* ============================================================
+   SECTION HEADLINE (shared)
+   ============================================================ */
+.section-headline-wrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  color: var(--gold);
+}
+.section-headline-left {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+}
+.section-headline-deco {
+  width: 17.5px; height: 35px;
+  transform: scaleX(-1);
+  flex-shrink: 0;
+}
+.section-headline-text {
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  color: var(--brick);
+  white-space: nowrap;
+  line-height: 1.4;
+}
+.section-headline-link {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--brick);
+  white-space: nowrap;
+  transition: color var(--transition-std);
+}
+.section-headline-link:hover { color: var(--gold); }
+
+/* ============================================================
+   ABOUT / ネコ市ネコ座 (Section 3)
+   ============================================================ */
+.about {
+  width: 100%;
+  background: var(--asset-about-bg) no-repeat center right var(--cream);
+  background-size: contain;
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 80px;
+}
+
+.about-bunting {
+  position: absolute;
+  top: -25px;
+  right: -16px;
+  width: 290px;
+  height: 168px;
+  pointer-events: none;
+}
+
+.about-mobile-photo {
+  display: none;
+  width: calc(100% - 80px);
+  margin: 0 40px 0;
+  aspect-ratio: 16 / 9;
+  background: url(../images/28a8ec76145e43ee.png) center / cover no-repeat;
+  border-radius: 20px;
+}
+
+.about-inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 80px 24px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+.about-content {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 60px;
+}
+
+.about-left {
+  flex: 60vw;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.about-ribbon {
+  position: relative;
+  padding: 12px 32px;
+  background: var(--brick);
+  color: var(--gold);
+  font-size: 40px;
+  line-height: 1.2;
+}
+
+.about-subhead {
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.6;
+  color: var(--brick);
+}
+
+.about-logo {
+  width: 280px;
+  height: auto;
+  display: block;
+}
+
+.about-body {
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--gray);
+}
+
+.about-right {
+  width: 40vw;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  position: relative;
+}
+
+/* ============================================================
+   CHARITY / 保護猫支援 (Section 6)
+   ============================================================ */
+.charity {
+  width: 100%;
+  background: var(--asset-fv-bg) var(--brick);
+  background-size: 7%;
+  background-repeat: repeat;
+  border-radius: 200px 200px 0px 0px;
+  position: relative;
+}
+@keyframes nyoki {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+.charity-cat-wrap {
+  position: absolute;
+  top: -100px;
+  right: 10%;
+  width: 300px;
+  height: 100px;
+  overflow: hidden;
+  pointer-events: none;
+}
+.charity-cat {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  transform: translateY(100%);
+  transition: transform 1s cubic-bezier(0.34, 1.1, 0.64, 1);
+}
+.charity-cat-wrap.is-visible .charity-cat {
+  transform: translateY(0);
+}
+.charity-inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 120px 24px;
+  display: flex;
+  flex-direction: row;
+  gap: 80px;
+  align-items: center;
+  justify-content: center;
+}
+.charity-image {
+  flex-shrink: 0;
+  width: 439px; height: 458px;
+  object-fit: contain;
+}
+.charity-text {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: flex-start;
+}
+.charity-headline {
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 1.4;
+  color: #fff;
+}
+.charity-body {
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 2;
+  color: var(--cream);
+}
+.btn-charity {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  padding: 18px 52px;
+  border-radius: 80px;
+  background: transparent;
+  box-shadow: inset 0 0 0 2px var(--gold);
+  border: none;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  font-family: "Noto Sans JP", "Zen Maru Gothic", sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--gold);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.btn-charity:hover {
+  background: var(--gold);
+  color: var(--brick);
+}
+.btn-charity svg { color: currentColor; transition: color 0.2s ease; }
+
+/* ============================================================
+   SHOP CAROUSEL (Section 4, id=shop anchor is in hero)
+   ============================================================ */
+.shop-section {
+  width: 100%;
+  background: url(../images/bg_cream.png) var(--cream-brighter);
+  border-radius: 200px 0px 0px 0px;
+  padding: 80px 0 80px;
+}
+.shop-inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+/* Carousel */
+.carousel-wrapper {
+  position: relative;
+}
+.carousel-viewport {
+  overflow: hidden;
+  width: 100%;
+}
+.carousel-track {
+  display: flex;
+  flex-direction: row;
+  gap: 36px;
+  transition: transform 0.4s ease;
+  will-change: transform;
+}
+
+/* Arrow buttons */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 60px; height: 60px;
+  border-radius: 40px;
+  background: var(--brick);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cream);
+  z-index: 10;
+  transition: background-color var(--transition-std), opacity var(--transition-std);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.carousel-btn:hover { background: var(--brick-dark); }
+.carousel-btn:disabled { opacity: 0.4; cursor: default; }
+.carousel-btn.prev { left: -30px; }
+.carousel-btn.next { right: -30px; }
+
+/* ============================================================
+   CARD — SHOP
+   ============================================================ */
+.card-shop {
+  flex-shrink: 0;
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  cursor: pointer;
+}
+/* Outer: clips to dynamic card size */
+.card-shop-img-wrap {
+  position: relative;
+  width: 360px; height: 240px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.card-shop-img-inner {
+  position: absolute;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background: rgb(238,214,177);
+  clip-path: polygon(49% 0.5%, 96% 16.5%, 100% 24.6%, 100% 91.7%, 94% 100%, 6% 100%, 0% 91.7%, 0% 24.6%, 4% 16.5%);
+  box-shadow: inset 0 0 0 1px rgb(238,214,177);
+  transition: box-shadow 0.3s ease;
+}
+.card-shop:hover .card-shop-img-inner { box-shadow: inset 0 0 0 27px rgb(255,255,255); }
+.card-shop-photo {
+  position: absolute;
+  inset: 0;
+  background: url(../images/shop-placeholder.png) center / cover no-repeat;
+  transform: scale(1);
+  transition: transform 0.45s ease;
+}
+.card-shop:hover .card-shop-photo { transform: scale(1.2); }
+.card-shop-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0;
+}
+.card-shop-pill {
+  display: inline-flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  padding: 4px 16px;
+  height: 27.25px;
+  border-radius: 30px;
+  background: #fff;
+  transition: background-color 0.18s ease;
+  width: fit-content;
+  position: relative;
+}
+.card-shop-pill-icons {
+  position: absolute;
+  top: -8px;
+  left: 10px;
+  display: flex;
+  flex-direction: row;
+}
+.card-shop-pill-icon { width: 11px; height: 13px; color: #fff; flex-shrink: 0; transition: color 0.18s ease; }
+.card-shop:hover .card-shop-pill { background: var(--brick); }
+.card-shop:hover .card-shop-pill-icon { color: var(--brick); }
+.card-shop-category {
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--brick);
+  white-space: nowrap;
+  line-height: 1.4;
+  transition: color 0.18s ease;
+}
+.card-shop:hover .card-shop-category { color: var(--cream); }
+.card-shop-name {
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--brick);
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   NEW ITEMS (Section 5)
+   ============================================================ */
+.new-items {
+  width: 100%;
+  background: var(--cream);
+  padding: 0 0 80px;
+  position: relative;
+}
+.new-items-bg-text {
+  position: absolute;
+  top: -35px; left: 50%;
+  transform: translateX(-50%);
+  font-family: "Jost", sans-serif;
+  font-weight: 500;
+  font-size: 220px;
+  color: var(--cream-brighter);
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+@keyframes catDrop {
+  0%   { transform: translateY(-260px); opacity: 0; }
+  60%  { opacity: 1; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+.new-items-bg-text-cat {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  opacity: 0;
+}
+.new-items-bg-text-cat.is-visible {
+  animation: catDrop 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.new-items-inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 210px 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  position: relative;
+  z-index: 1;
+}
+.category-filters {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.btn-filter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 20px;
+  border-radius: 80px;
+  border: 2px solid var(--brick);
+  background: transparent;
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--brick);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+.btn-filter:hover,
+.btn-filter.is-active {
+  background: var(--brick);
+  color: var(--cream);
+}
+
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 360px);
+  gap: 36px;
+}
+
+/* ============================================================
+   CARD — ITEM
+   ============================================================ */
+.card-item {
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  cursor: pointer;
+  position: relative;
+  border-radius: 20px;
+}
+.card-item-img-outer {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  background: transparent;
+  transition: background-color 0.25s ease;
+}
+.card-item:hover { background: var(--brick); }
+.card-item-img-wrap {
+  position: relative;
+  height: 200px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgb(238,214,177);
+  transition: box-shadow 0.25s ease;
+  flex-shrink: 0;
+  align-self: stretch;
+}
+.card-item:hover .card-item-img-wrap { box-shadow: inset 0 0 0 1px var(--brick); }
+.card-item-photo {
+  position: absolute;
+  inset: 0;
+  background: url(../images/a2de7ded9c86ff39.jpg) 51.440% 82.336% / 109.444% 197.990% no-repeat;
+  transform: scale(1);
+  transition: transform 0.45s ease;
+}
+.card-item-photo.photo-2 {
+  background: url(../images/2b5420ac1d1c9197.jpg) 79.335% 100% / 137.574% 146.429% no-repeat;
+}
+.card-item-photo.photo-3 {
+  background: url(../images/ce3ae5d331d241c4.png) 50% 84.698% / 100% 180.905% no-repeat;
+}
+.card-item:hover .card-item-photo { transform: scale(1.2); }
+
+/* Paw slide-in animation */
+.card-item-paw {
+  position: absolute;
+  right: 0; top: 0;
+  width: 115.426px; height: 100px;
+  overflow: hidden;
+  pointer-events: none;
+}
+.card-item-paw-inner {
+  position: absolute;
+  left: 0; top: -108.584px;
+  width: 115.426px; height: 108.584px;
+  transition: top 0.35s ease;
+}
+.card-item-paw-inner img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.card-item:hover .card-item-paw-inner { top: -8.584px; }
+
+.card-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+}
+.card-item-pill-wrap {
+  position: relative;
+  height: 35.25px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.card-item-pill-icons {
+  position: absolute;
+  left: 11px; top: 0;
+  width: 22px; height: 13px;
+  overflow: hidden;
+}
+.card-item-pill {
+  position: absolute;
+  left: 0; top: 8px;
+  height: 27.25px;
+  border-radius: 30px;
+  background: var(--cream-dark);
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  padding: 4px 16px;
+  align-items: center;
+  transition: background-color 0.2s ease;
+}
+.card-item:hover .card-item-pill { background: #fff; }
+.card-item-category {
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--brick);
+  white-space: nowrap;
+  line-height: 1.4;
+}
+.card-item-name {
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.4;
+  color: var(--brick);
+  transition: color 0.25s ease;
+}
+.card-item:hover .card-item-name { color: var(--cream); }
+.card-item-price-row {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: flex-end;
+}
+.card-item-price {
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.4;
+  color: var(--brick);
+  white-space: nowrap;
+  transition: color 0.25s ease;
+}
+.card-item:hover .card-item-price { color: var(--cream); }
+.card-item-currency {
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.4;
+  color: var(--brick);
+  white-space: nowrap;
+  transition: color 0.25s ease;
+}
+.card-item:hover .card-item-currency { color: var(--cream); }
+.card-item-shop {
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--brick);
+  white-space: nowrap;
+  transition: color 0.25s ease;
+}
+.card-item:hover .card-item-shop { color: var(--cream); }
+
+/* ============================================================
+   PLATFORMS / ARCHES (Section 6)
+   ============================================================ */
+.platforms {
+    width: 100%;
+    max-width: 1220px;
+    background: #fff;
+    padding: 80px 0;
+    margin: 0 auto 80px;
+    border-radius: 80px;
+}
+.platforms-inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+}
+.platforms-headline-wrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: var(--gold);
+  gap: 20px;
+}
+.platforms-headline-text {
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  color: var(--brick);
+  white-space: nowrap;
+  line-height: 1.4;
+}
+.platforms-sub {
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--gray);
+  text-align: center;
+}
+.platform-logos {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.platform-logo {
+  height: 38px;
+  width: auto;
+  object-fit: contain;
+}
+/* Asset classes for platform logos */
+.platform-logo-1 { width: 266px; height: 38px; background: url(../images/e2c4c8add08572dc.png) center / contain no-repeat; }
+.platform-logo-2 { width: 125px; height: 38px; background: url(../images/667df2f09caf9f7e.png) 50% 68.944% / 100% 190.865% no-repeat; }
+.platform-logo-3 { width: 73px;  height: 38px; background: url(../images/4f757c9af521cd9c.png) 50% 50.407% / 100% 192.481% no-repeat; }
+
+/* ============================================================
+   DAWN ボタン・バリアント・数量 — 色をトップページに合わせる
+   ============================================================ */
+
+/* Primary button */
+.button,
+.shopify-challenge__button,
+.customer button {
+  background-color: var(--gold) !important;
+  color: var(--brick) !important;
+}
+.button:hover,
+.shopify-challenge__button:hover,
+.customer button:hover {
+  background-color: var(--brick) !important;
+  color: var(--gold) !important;
+}
+/* Dawn の border 擬似要素を非表示 */
+.button::before, .button::after,
+.shopify-challenge__button::before, .shopify-challenge__button::after,
+.customer button::before, .customer button::after {
+  display: none !important;
+}
+
+/* Variant pill — 未選択 */
+.product-form__input--pill input[type='radio'] + label {
+  color: var(--brick) !important;
+  border: 0 !important;
+}
+/* Variant pill — 選択時 brick/cream */
+.product-form__input--pill input[type='radio']:checked + label {
+  background-color: var(--brick) !important;
+  color: var(--cream) !important;
+}
+
+/* Quantity — 文字色を brick に */
+.quantity,
+.quantity__input,
+.quantity__button {
+  color: var(--brick) !important;
+}
+.quantity::after {
+  box-shadow: 0 0 0 var(--inputs-border-width) var(--brick) !important;
+}
+
+/* Buy it now — 背景を brick に */
+.shopify-payment-button__button--unbranded {
+  background-color: var(--brick) !important;
+  color: var(--cream) !important;
+}
+.shopify-payment-button__button--unbranded:hover {
+  background-color: var(--brick-dark) !important;
+}
+
+/* Shopify accelerated checkout (Shop Pay 等) 角丸のみ */
+shopify-accelerated-checkout,
+shopify-accelerated-checkout-cart {
+  --shopify-accelerated-checkout-button-border-radius: 80px;
+}
+
+/* 商品情報エリアのテキスト全般を brick に */
+.product__info-wrapper,
+.product__title,
+.product__title > *,
+.product__text,
+.product-form__input .form__label,
+.product-form__quantity .form__label,
+.product-form__quantity-top .form__label,
+.tax-note,
+.price,
+.price__regular,
+.price__sale,
+.price-item {
+  color: var(--brick) !important;
+}
+
+/* 店名・ベンダー表記 */
+.caption-with-letter-spacing {
+  font-size: 1.4rem !important;
+  padding-bottom: 12px !important;
+}
+
+/* 商品名 */
+.product__title {
+  font-size: 32px !important;
+}
+
+/* 値段 */
+.price-item {
+  font-size: 2rem !important;
+}
+
+/* 商品情報コンテナ — 要素間スペース */
+.product__info-container > * + * {
+  margin: 2rem 0 !important;
+}
+.product__info-container .product-form,
+.product__info-container .product__description,
+.product__info-container .icon-with-text {
+  margin: 3rem 0 !important;
+}
+
+/* 商品説明テキスト */
+.product__description {
+  color: var(--gray) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 40px !important;
+}
+
+/* Share リンク */
+.share-button,
+.share-button__link,
+.share-button a {
+  color: var(--brick) !important;
+}
+
+/* ============================================================
+   PRODUCT PAGE — 写真と説明を50/50レイアウト
+   ============================================================ */
+@media screen and (min-width: 990px) {
+  .product:not(.product--no-media) .product__media-wrapper,
+  .product:not(.product--no-media) .product__info-wrapper {
+    max-width: 50% !important;
+    width: calc(50% - var(--grid-desktop-horizontal-spacing) / 2) !important;
+  }
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+  width: 100%;
+  background: var(--asset-footer-pattern) repeat var(--brick-dark);
+  background-size: 84px 48px;
+  color: var(--cream);
+  padding: 60px 0 40px;
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+.footer-inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.footer-main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+}
+.footer-logo-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
+  flex-shrink: 0;
+}
+.footer-logo-img {
+  height: 80px;
+  width: auto;
+}
+.footer-logo-sub {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}
+.footer-logo-with {
+  font-family: "Leckerli One", cursive;
+  font-size: 22px;
+  color: var(--cream);
+  white-space: nowrap;
+}
+.footer-nekoichi-logo {
+  height: 50px;
+  width: auto;
+}
+.footer-nav {
+  display: flex;
+  flex-direction: row;
+  gap: 60px;
+  flex-shrink: 0;
+}
+.footer-nav-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.footer-nav-col a {
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--cream);
+  opacity: 0.85;
+  white-space: nowrap;
+  transition: color var(--transition-std), opacity var(--transition-std);
+}
+.footer-nav-col a:hover { color: var(--gold); opacity: 1; }
+.footer-divider {
+  width: 100%;
+  border: none;
+  border-top: 1px solid rgba(245,239,230,0.3);
+}
+.footer-bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-copy {
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--cream);
+  opacity: 0.7;
+}
+.footer-copy a {
+  color: var(--cream);
+}
+.footer-copy a:hover {
+  color: var(--gold);
+}
+.footer-presented {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  font-family: "Jost", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--cream);
+  opacity: 0.7;
+}
+.footer-necorepa-logo {
+  height: 12px;
+  width: auto;
+  filter: brightness(0) invert(1);
+  opacity: 0.85;
+}
+
+/* Spacer の出し分け */
+@media (max-width: 1023px) {
+  .nav-desktop-spacer { display: none !important; }
+}
+@media (min-width: 1024px) {
+  .nav-mobile-spacer { display: none !important; }
+}
+
+/* ============================================================
+   RESPONSIVE — Tablet (640–1023px)
+   ============================================================ */
+@media (max-width: 1023px) {
+  /* Nav */
+  #nav-desktop { display: none; }
+  #nav-mobile  { display: block; }
+  .nav-mobile-spacer { display: block; height: var(--nav-h-tablet); }
+  .nav-mobile-logo { font-size: 26px; }
+
+  /* Hero: switch to mobile layout */
+  .hero { display: none; }
+  .hero-mobile {
+    display: flex;
+    padding: 60px 40px 60px;
+  }
+
+  /* About */
+  .about-content {
+    flex-direction: column-reverse;
+  }
+  .about-right {
+    width: 60vw;
+  }
+  .about-bunting { display: none; }
+  .about-mobile-photo { display: block; }
+  .about-inner { padding: 32px 40px 0; flex-direction: column; gap: 32px; }
+  .about-ribbon-text { font-size: 28px; }
+  .about-subhead { font-size: 18px; }
+  .about { padding-bottom: 60px; }
+
+  /* Charity */
+  .charity { border-radius: 60px 60px 0px 0px; }
+  .charity-inner {
+    flex-direction: column;
+    align-items: center;
+    padding: 80px 40px;
+    gap: 48px;
+  }
+  .charity-image { width: 320px; height: 334px; }
+  .charity-headline { font-size: 32px; }
+  .charity-body    { font-size: 18px; }
+
+  /* Shop */
+  .shop-section { border-radius: 60px 0px 0px 0px; padding: 60px 0; }
+  .shop-inner { padding: 0 40px; gap: 36px; }
+  .carousel-track { gap: 40px; }
+  .section-headline-text { font-size: 32px; }
+
+  /* Items */
+  .new-items-bg-text { top:-25px; font-size: 160px; }
+  .new-items-bg-text-cat { bottom: -10px;}
+  .new-items-inner { padding: 180px 40px 0; gap: 32px; }
+  .items-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  .card-item { width: 100%; }
+
+  /* Platforms */
+  .platforms { padding: 60px 0; }
+  .platforms-headline-text { font-size: 32px; }
+  .platforms-sub { font-size: 15px; }
+
+  /* Footer */
+  .footer { padding: 48px 0 32px; }
+  .footer-main { flex-direction: column; align-items: center; gap: 32px; }
+  .footer-nav { gap: 40px; }
+}
+
+/* ============================================================
+   RESPONSIVE — Mobile (<640px)
+   ============================================================ */
+@media (max-width: 639px) {
+  .nav-mobile-spacer { height: var(--nav-h-mobile); }
+
+  .hero-mobile {
+    padding: 48px 20px;
+    gap: 32px;
+  }
+  .hero-mobile .hero-logo-svg { width: 240px; }
+  .hero-mobile .hero-sub-with { font-size: 20px; }
+  .hero-mobile .btn-hero { font-size: 16px; padding: 12px 28px; }
+  .hero-mobile-catch { font-size: 22px; }
+  .hero-sub-logo { height: 44px; }
+
+  .about-mobile-photo { width: calc(100% - 40px); margin: 0 20px; }
+  .about-inner { padding: 24px 20px 0; }
+  .about-ribbon-text { font-size: 20px; left: 24px; }
+  .about-subhead { font-size: 15px; }
+  .about-body { font-size: 14px; }
+  .about-logo { display: none; }
+  .about { padding-bottom: 40px; }
+
+  .charity-inner { padding: 48px 20px; }
+  .charity-image { width: 240px; height: 250px; }
+  .charity-headline { font-size: 26px; }
+  .charity-body { font-size: 16px; }
+  .btn-charity { font-size: 18px; }
+
+  .shop-inner { padding: 0 24px; gap: 28px; }
+  .carousel-track { gap: 20px; }
+  .carousel-btn.prev { left: -16px; }
+  .carousel-btn.next { right: -16px; }
+  .section-headline-text { font-size: 28px; }
+  .section-headline-link { font-size: 15px; }
+  .card-shop { width: 280px; }
+  .card-shop-img-wrap { width: 280px; height: 186px; }
+
+  .new-items-bg-text { font-size: 120px; }
+  .new-items-bg-text-cat { bottom: -35px;
+  }
+  .new-items-inner { padding: 140px 20px 0; gap: 24px; }
+  .items-grid { grid-template-columns: 1fr; gap: 24px; }
+
+  .platforms-inner { padding: 0 20px; }
+  .platform-logos { gap: 24px; }
+
+  .footer-inner { padding: 0 20px; gap: 32px; }
+  .footer-logo-wrap { flex-direction: column; align-items: center; gap: 16px; }
+  .footer-nav { gap: 24px; }
+  .footer-nav-col a { font-size: 14px; }
+  .footer-bottom { flex-direction: column; gap: 16px; align-items: center; }
+}

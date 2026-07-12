@@ -1,0 +1,62 @@
+<footer class="footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-main">
+      <div class="footer-logo-wrap">
+        <a href="{{ routes.root_url }}">
+          <img src="{{ 'logo-cream.svg' | asset_url }}" alt="ネコリパマルシェ" class="footer-logo-img">
+        </a>
+        <div class="footer-logo-sub">
+          <span class="footer-logo-with">with</span>
+          <img src="{{ 'logo_nekoichi-cream.svg' | asset_url }}" alt="ネコ市ネコ座" class="footer-nekoichi-logo">
+        </div>
+      </div>
+      <nav class="footer-nav" aria-label="フッターナビゲーション">
+        <div class="footer-nav-col">
+          {%- for link in linklists[section.settings.menu_col1].links -%}
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          {%- else -%}
+            <a href="#">このサイトについて</a>
+            <a href="#">保護猫について</a>
+            <a href="#">よくある質問</a>
+            <a href="#">出店申し込み</a>
+          {%- endfor -%}
+        </div>
+        <div class="footer-nav-col">
+          {%- for link in linklists[section.settings.menu_col2].links -%}
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          {%- else -%}
+            <a href="/policies/legal-notice">特定商取引法</a>
+            <a href="{{ shop.privacy_policy.url }}">プライバシーポリシー</a>
+            <a href="/pages/contact">お問い合わせ</a>
+          {%- endfor -%}
+        </div>
+      </nav>
+    </div>
+    <hr class="footer-divider">
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</p>
+      <p class="footer-presented">
+        Presented by
+        <img src="{{ 'logo_necorepa-mini.svg' | asset_url }}" alt="NECO REPUBLIC" class="footer-necorepa-logo">
+      </p>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "ネコリパ フッター",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu_col1",
+      "label": "フッターメニュー（左列）"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_col2",
+      "label": "フッターメニュー（右列）"
+    }
+  ]
+}
+{% endschema %}

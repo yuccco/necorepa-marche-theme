@@ -1,0 +1,13 @@
+{
+  "name": "フッター",
+  "type": "footer",
+  "sections": {
+    "necorepa-footer": {
+      "type": "necorepa-footer",
+      "settings": {}
+    }
+  },
+  "order": [
+    "necorepa-footer"
+  ]
+}

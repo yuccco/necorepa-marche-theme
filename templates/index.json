@@ -1,0 +1,49 @@
+{
+  "sections": {
+    "necorepa-hero": {
+      "type": "necorepa-hero",
+      "settings": {
+        "btn_shop_label": "お店を見てまわる",
+        "btn_shop_url": "/collections/all",
+        "btn_register_label": "会員登録",
+        "btn_register_url": "/account/register"
+      }
+    },
+    "necorepa-about": {
+      "type": "necorepa-about",
+      "settings": {
+        "ribbon_text": "猫を助けるお祭りへ、ようこそ。",
+        "subhead": "ネコ市ネコ座のお店をオンラインでも楽しめるネットショップ。\nここでしか手に入らない商品との出会いをお楽しみください！",
+        "body_text": "「ネコ市ネコ座」はネコリパブリックが主催する、猫グッズを扱うお店が集まるイベントです。\nそこに出展するハンドメイド作家・猫グッズショップの商品を、\nイベントが終わってもここで買えるのがこのマルシェ。\n\n購入金額の一部はネコリパブリックの保護猫活動（医療費・ごはん代）に使われます。\nあなたのお買い物が、そのまま猫の命を支えます。"
+      }
+    },
+    "necorepa-shop-carousel": {
+      "type": "necorepa-shop-carousel",
+      "settings": {}
+    },
+    "necorepa-new-items": {
+      "type": "necorepa-new-items",
+      "settings": {}
+    },
+    "necorepa-platforms": {
+      "type": "necorepa-platforms",
+      "settings": {}
+    },
+    "necorepa-charity": {
+      "type": "necorepa-charity",
+      "settings": {
+        "headline": "あなたのお買い物が、\n保護猫の毎日をつくる。",
+        "body": "あなたがお買い物をすることで\n保護猫のごはんに、\n医療に、\n暖かい寝床につながります。",
+        "btn_label": "会員登録をする"
+      }
+    }
+  },
+  "order": [
+    "necorepa-hero",
+    "necorepa-about",
+    "necorepa-shop-carousel",
+    "necorepa-new-items",
+    "necorepa-platforms",
+    "necorepa-charity"
+  ]
+}

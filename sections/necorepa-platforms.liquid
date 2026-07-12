@@ -1,0 +1,68 @@
+<section class="platforms" aria-label="展開中のモール">
+  <div class="platforms-inner">
+    <div class="platforms-headline-wrap">
+      <svg class="section-headline-deco" viewBox="0 0 17.5 35" fill="none" style="color:var(--gold)" aria-hidden="true">
+        <path d="M 0 17.5 C 0 27.165 7.835 35 17.5 35 L 17.5 0 C 7.835 0 0 7.835 0 17.5 Z" fill="currentColor" fill-rule="nonzero" />
+      </svg>
+      <h2 class="platforms-headline-text">{{ section.settings.title }}</h2>
+    </div>
+    <p class="platforms-sub">{{ section.settings.subtitle }}</p>
+    <div class="platform-logos">
+      {%- if section.settings.logo_1 != blank -%}
+        <a href="{{ section.settings.url_1 }}" target="_blank" rel="noopener">
+          <img src="{{ section.settings.logo_1 | image_url: width: 300 }}" alt="{{ section.settings.label_1 }}" class="platform-logo">
+        </a>
+      {%- else -%}
+        <img src="{{ 'logo_rakuten.png' | asset_url }}" alt="楽天市場" class="platform-logo">
+        <img src="{{ 'logo_yahoo.png' | asset_url }}" alt="Yahoo!ショッピング" class="platform-logo">
+        <img src="{{ 'logo_amazon.png' | asset_url }}" alt="Amazon" class="platform-logo">
+        <img src="{{ 'logo_ebay.png' | asset_url }}" alt="eBay" class="platform-logo">
+        <img src="{{ 'logo_etsy.png' | asset_url }}" alt="Etsy" class="platform-logo">
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "ネコリパ プラットフォーム",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "タイトル",
+      "default": "さまざまなモールでも展開中"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "サブテキスト",
+      "default": "お客様の使いやすいモールでお買い物できます！"
+    },
+    {
+      "type": "header",
+      "content": "カスタムロゴ（未設定時はデフォルト画像を使用）"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_1",
+      "label": "ロゴ 1"
+    },
+    {
+      "type": "url",
+      "id": "url_1",
+      "label": "ロゴ 1 リンク"
+    },
+    {
+      "type": "text",
+      "id": "label_1",
+      "label": "ロゴ 1 alt テキスト"
+    }
+  ],
+  "presets": [
+    {
+      "name": "ネコリパ プラットフォーム"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,58 @@
+<section class="about" id="about" aria-label="ネコ市ネコ座について">
+  <div class="about-bunting" aria-hidden="true">
+    <svg viewBox="0 0 290 168" fill="none" width="290" height="168">
+      <path d="M 31.398 0 L 58.589 54.763 L 4.206 54.763 Z" fill="rgb(236,203,100)" transform="matrix(0.611,0.792,0.792,-0.611,0,44.589)" />
+      <path d="M 31.398 0 L 58.589 54.763 L 4.206 54.763 Z" fill="rgb(202,229,118)" transform="matrix(0.845,0.535,0.535,-0.845,45.797,101.868)" />
+      <path d="M 31.398 0 L 58.589 54.763 L 4.206 54.763 Z" fill="rgb(100,191,236)" transform="matrix(0.948,0.318,0.318,-0.948,102.839,138.116)" />
+      <path d="M 31.398 0 L 58.589 54.763 L 4.206 54.763 Z" fill="rgb(236,163,100)" transform="matrix(0.989,0.146,0.146,-0.989,164.086,158.401)" />
+      <path d="M 31.398 0 L 58.589 54.763 L 4.206 54.763 Z" fill="rgb(236,203,100)" transform="matrix(1.000,-0.024,-0.024,-1.000,227.170,167.234)" />
+    </svg>
+  </div>
+
+  <div class="about-mobile-photo" role="img" aria-label="ネコ市ネコ座イベント写真"></div>
+
+  <div class="about-inner">
+    <div class="about-ribbon">{{ section.settings.ribbon_text }}</div>
+    <div class="about-content">
+      <div class="about-left">
+        <p class="about-subhead">{{ section.settings.subhead | newline_to_br }}</p>
+        <img class="about-logo" src="{{ 'logo_nekoichi-brick.svg' | asset_url }}" alt="ネコ市ネコ座">
+        <p class="about-body">{{ section.settings.body_text | newline_to_br }}</p>
+      </div>
+      <div class="about-right" aria-hidden="true">
+        <img src="{{ 'about_photo.png' | asset_url }}" class="about-photo-top" alt="">
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "ネコリパ About",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ribbon_text",
+      "label": "リボンテキスト",
+      "default": "猫を助けるお祭りへ、ようこそ。"
+    },
+    {
+      "type": "textarea",
+      "id": "subhead",
+      "label": "サブヘッドライン",
+      "default": "ネコ市ネコ座のお店をオンラインでも楽しめるネットショップ。\nここでしか手に入らない商品との出会いをお楽しみください！"
+    },
+    {
+      "type": "textarea",
+      "id": "body_text",
+      "label": "本文",
+      "default": "「ネコ市ネコ座」はネコリパブリックが主催する、猫グッズを扱うお店が集まるイベントです。\n購入金額の一部はネコリパブリックの保護猫活動に使われます。"
+    }
+  ],
+  "presets": [
+    {
+      "name": "ネコリパ About"
+    }
+  ]
+}
+{% endschema %}
