@@ -92,12 +92,35 @@
                 {%- when '@app' -%}
                   {% render block %}
                 {%- when 'vendor' -%}
+                  <!-- DEBUG: vendor={{ product.vendor }} / metaobjects count={{ shop.metaobjects.shop.values.size }} -->
+                  {%- assign shop_url = product.vendor | url_for_vendor -%}
+                  {%- assign shop_icon = blank -%}
+                  {%- assign shop_found = false -%}
+                  {%- for shop_item in shop.metaobjects.shop.values -%}
+                    <!-- DEBUG: checking shop_item.shop_name.value={{ shop_item.shop_name.value }} -->
+                    {%- if shop_item.shop_name.value == product.vendor -%}
+                      {%- assign shop_url = shop_item.system.url -%}
+                      {%- assign shop_icon = shop_item.shop_icon.value -%}
+                      {%- assign shop_found = true -%}
+                      {%- break -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                  <!-- DEBUG: shop_found={{ shop_found }} / shop_url={{ shop_url }} / shop_icon={{ shop_icon }} -->
                   <a
-                    href="{{ product.vendor | url_for_vendor }}"
-                    class="product__text caption-with-letter-spacing"
+                    href="{{ shop_url }}"
+                    class="product-vendor-link"
                     {{ block.shopify_attributes }}
                   >
-                    {{- product.vendor -}}
+                    {%- if shop_icon != blank -%}
+                      <img
+                        src="{{ shop_icon | image_url: width: 48 }}"
+                        alt=""
+                        class="product-vendor-icon"
+                        width="48"
+                        height="48"
+                      >
+                    {%- endif -%}
+                    <span class="product-vendor-name">{{ product.vendor }}</span>
                   </a>
                 {%- when 'text' -%}
                   <p

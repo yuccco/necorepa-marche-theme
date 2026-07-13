@@ -1,47 +1,43 @@
 <section class="shop-list-section">
   <div class="shop-list-inner">
-    <h1 class="shop-list-title">ショップ一覧</h1>
+    <div class="page-headline-wrap">
+      <svg class="section-headline-deco" viewBox="0 0 17.5 35" fill="none" aria-hidden="true">
+        <path d="M 0 17.5 C 0 27.165 7.835 35 17.5 35 L 17.5 0 C 7.835 0 0 7.835 0 17.5 Z" fill="currentColor" fill-rule="nonzero" />
+      </svg>
+      <h1 class="page-headline-title">ショップ一覧</h1>
+    </div>
     <div class="shop-list-grid">
-      {%- assign sorted_products = collections.all.products | sort: 'published_at' | reverse -%}
-      {%- assign shown_vendors = '' -%}
-      {%- for product in sorted_products limit: 200 -%}
-        {%- unless shown_vendors contains product.vendor -%}
-          {%- assign shown_vendors = shown_vendors | append: product.vendor | append: '|||' -%}
-          <a href="{{ product.vendor | url_for_vendor }}" class="card-shop">
-            <div class="card-shop-img-wrap">
-              <div class="card-shop-img-inner">
-                <div class="card-shop-photo">
-                  {%- if product.featured_image -%}
-                    <img
-                      src="{{ product.featured_image | image_url: width: 360 }}"
-                      alt="{{ product.featured_image.alt | escape }}"
-                      width="360"
-                      height="240"
-                      loading="lazy"
-                      style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"
-                    >
-                  {%- endif -%}
-                </div>
+      {%- for shop in shop.metaobjects.shop.values -%}
+        <a href="{{ shop.system.url }}" class="card-shop">
+          <div class="card-shop-img-wrap">
+            <div class="card-shop-img-inner">
+              <div class="card-shop-photo">
+                {%- if shop.shop_thumbnail.value != blank -%}
+                  <img
+                    src="{{ shop.shop_thumbnail.value | image_url: width: 360 }}"
+                    alt="{{ shop.shop_name.value }}"
+                    width="360"
+                    height="240"
+                    loading="lazy"
+                    style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"
+                  >
+                {%- elsif shop.shop_icon.value != blank -%}
+                  <img
+                    src="{{ shop.shop_icon.value | image_url: width: 360 }}"
+                    alt="{{ shop.shop_name.value }}"
+                    width="360"
+                    height="240"
+                    loading="lazy"
+                    style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"
+                  >
+                {%- endif -%}
               </div>
             </div>
-            <div class="card-shop-info">
-              <div class="card-shop-pill">
-                <div class="card-shop-pill-icons" aria-hidden="true">
-                  <svg class="card-shop-pill-icon" viewBox="0 0 11 13" fill="none">
-                    <path d="M 3.703 3.678 C 4.434 2.182 6.566 2.182 7.297 3.678 L 8.857 6.872 C 9.506 8.201 8.539 9.75 7.06 9.75 L 3.94 9.75 C 2.461 9.75 1.494 8.201 2.143 6.872 L 3.703 3.678 Z" fill="currentColor" fill-rule="nonzero" />
-                  </svg>
-                  <svg class="card-shop-pill-icon" viewBox="0 0 11 13" fill="none">
-                    <path d="M 3.703 3.678 C 4.434 2.182 6.566 2.182 7.297 3.678 L 8.857 6.872 C 9.506 8.201 8.539 9.75 7.06 9.75 L 3.94 9.75 C 2.461 9.75 1.494 8.201 2.143 6.872 L 3.703 3.678 Z" fill="currentColor" fill-rule="nonzero" />
-                  </svg>
-                </div>
-                <span class="card-shop-category">
-                  {%- if product.type != blank -%}{{ product.type }}{%- else -%}ショップ{%- endif -%}
-                </span>
-              </div>
-              <p class="card-shop-name">{{ product.vendor }}</p>
-            </div>
-          </a>
-        {%- endunless -%}
+          </div>
+          <div class="card-shop-info">
+            <p class="card-shop-name">{{ shop.shop_name.value }}</p>
+          </div>
+        </a>
       {%- endfor -%}
     </div>
   </div>
@@ -61,12 +57,6 @@
   flex-direction: column;
   gap: 48px;
 }
-.shop-list-title {
-  font-family: "Zen Maru Gothic", sans-serif;
-  font-weight: 700;
-  font-size: 40px;
-  color: var(--brick);
-}
 .shop-list-grid {
   display: grid;
   grid-template-columns: repeat(3, 360px);
@@ -74,11 +64,9 @@
 }
 @media (max-width: 1023px) {
   .shop-list-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
-  .shop-list-title { font-size: 32px; }
 }
 @media (max-width: 639px) {
   .shop-list-grid { grid-template-columns: 1fr; gap: 24px; }
-  .shop-list-title { font-size: 28px; }
 }
 {% endstylesheet %}
 

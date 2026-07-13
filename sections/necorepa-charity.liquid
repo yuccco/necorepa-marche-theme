@@ -7,7 +7,7 @@
     <div class="charity-text">
       <h2 class="charity-headline">{{ section.settings.headline | newline_to_br }}</h2>
       <p class="charity-body">{{ section.settings.body | newline_to_br }}</p>
-      <a href="{{ section.settings.btn_url }}" class="btn-charity" role="button">
+      <a href="{{ section.settings.btn_url | default: routes.account_register_url }}" class="btn-charity" role="button">
         {{ section.settings.btn_label }}
         <i class="fa-solid fa-angle-right"></i>
       </a>

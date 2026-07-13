@@ -336,6 +336,14 @@
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
+    <!-- SVG ClipPath Definitions -->
+    <svg width="0" height="0" style="position:absolute">
+      <defs>
+        <clipPath id="shop-card-clip" clipPathUnits="objectBoundingBox">
+          <path d="M0.9407,1 H0.0593 c-0.0327,0,-0.0593,-0.0404,-0.0593,-0.0898 V0.2417 c0,-0.0414,0.0187,-0.0777,0.0453,-0.0873 L0.448,0.0091 c0.034,-0.0121,0.0697,-0.0121,0.1037,0 l0.4027,0.1453 c0.0267,0.0096,0.0453,0.0459,0.0453,0.0873 v0.6686 c0,0.0494,-0.0267,0.0898,-0.0593,0.0898 Z" />
+        </clipPath>
+      </defs>
+    </svg>
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>

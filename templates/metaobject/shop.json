@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "metaobject-shop",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

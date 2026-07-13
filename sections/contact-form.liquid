@@ -3,7 +3,12 @@
 <div class="necorepa-contact">
   <div class="necorepa-contact__inner">
     {%- if section.settings.heading != blank -%}
-      <h2 class="necorepa-contact__title">{{ section.settings.heading }}</h2>
+      <div class="page-headline-wrap">
+        <svg class="section-headline-deco" viewBox="0 0 17.5 35" fill="none" aria-hidden="true">
+          <path d="M 0 17.5 C 0 27.165 7.835 35 17.5 35 L 17.5 0 C 7.835 0 0 7.835 0 17.5 Z" fill="currentColor" fill-rule="nonzero" />
+        </svg>
+        <h2 class="page-headline-title">{{ section.settings.heading }}</h2>
+      </div>
     {%- endif -%}
     <div class="contact">
     {%- form 'contact', id: 'ContactForm' -%}

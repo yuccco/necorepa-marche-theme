@@ -12,10 +12,15 @@
 <div class="collection-hero{% if section.settings.show_collection_image and collection.image %} collection-hero--with-image{% endif %} color-{{ section.settings.color_scheme }} gradient">
   <div class="collection-hero__inner page-width {% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
     <div class="collection-hero__text-wrapper">
-      <h1 class="collection-hero__title">
-        <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
-        {{- collection.title | escape -}}
-      </h1>
+      <div class="page-headline-wrap">
+        <svg class="section-headline-deco" viewBox="0 0 17.5 35" fill="none" aria-hidden="true">
+          <path d="M 0 17.5 C 0 27.165 7.835 35 17.5 35 L 17.5 0 C 7.835 0 0 7.835 0 17.5 Z" fill="currentColor" fill-rule="nonzero" />
+        </svg>
+        <h1 class="collection-hero__title">
+          <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
+          {{- collection.title | escape -}}
+        </h1>
+      </div>
 
       {%- if section.settings.show_collection_description -%}
         <div class="collection-hero__description rte">{{ collection.description }}</div>

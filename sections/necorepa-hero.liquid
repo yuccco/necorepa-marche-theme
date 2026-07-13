@@ -24,7 +24,7 @@
           {{ section.settings.btn_shop_label }}
           <i class="fa-solid fa-angle-right"></i>
         </a>
-        <a href="{{ section.settings.btn_register_url }}" class="btn-hero btn-hero-border" role="button">
+        <a href="{{ section.settings.btn_register_url | default: routes.account_register_url }}" class="btn-hero btn-hero-border" role="button">
           {{ section.settings.btn_register_label }}
           <i class="fa-solid fa-angle-right"></i>
         </a>
@@ -47,7 +47,7 @@
       {{ section.settings.btn_shop_label }}
       <i class="fa-solid fa-angle-right"></i>
     </a>
-    <a href="{{ section.settings.btn_register_url }}" class="btn-hero btn-hero-border" role="button">
+    <a href="{{ section.settings.btn_register_url | default: routes.account_register_url }}" class="btn-hero btn-hero-border" role="button">
       {{ section.settings.btn_register_label }}
       <i class="fa-solid fa-angle-right"></i>
     </a>
