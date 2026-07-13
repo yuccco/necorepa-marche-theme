@@ -1,0 +1,33 @@
+<article class="card-item">
+  <a href="{{ card_product.url }}" aria-label="{{ card_product.title | escape }}">
+    <div class="card-item-img-outer">
+      <div class="card-item-img-wrap">
+        {%- if card_product.featured_image -%}
+          <img
+            src="{{ card_product.featured_image | image_url: width: 360 }}"
+            alt="{{ card_product.featured_image.alt | escape }}"
+            width="360"
+            height="200"
+            {% if lazy_load %}loading="lazy"{% endif %}
+            style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"
+          >
+        {%- else -%}
+          <div class="card-item-photo"></div>
+        {%- endif -%}
+      </div>
+      <div class="card-item-paw" aria-hidden="true">
+        <div class="card-item-paw-inner">
+          <img src="{{ 'cat-hand.svg' | asset_url }}" alt="" width="116" height="109">
+        </div>
+      </div>
+    </div>
+    <div class="card-item-info">
+      <span class="card-item-name">{{ card_product.title }}</span>
+      <div class="card-item-price-row">
+        <span class="card-item-price">{{ card_product.price | money_without_currency }}</span>
+        <span class="card-item-currency">円</span>
+      </div>
+      <span class="card-item-shop">{{ card_product.vendor }}</span>
+    </div>
+  </a>
+</article>

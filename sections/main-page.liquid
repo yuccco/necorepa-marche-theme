@@ -15,9 +15,11 @@
 {%- endstyle -%}
 
 <div class="page-width page-width--narrow section-{{ section.id }}-padding">
-  <h1 class="main-page-title page-title h0{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-    {{ page.title | escape }}
-  </h1>
+  <div class="{% if template == 'page.contact' %}contact{% else %}page{% endif %}__title">
+    <h1 class="h0{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+      {%- if template == 'page.contact' -%}お問合せ{%- else -%}{{ page.title | escape }}{%- endif -%}
+    </h1>
+  </div>
   <div class="rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
     {{ page.content }}
   </div>

@@ -251,14 +251,14 @@
     },
     "contact": {
       "form": {
-        "title": "Contact form",
-        "name": "Name",
-        "email": "Email",
-        "phone": "Phone number",
-        "comment": "Comment",
-        "send": "Send",
-        "post_success": "Thanks for contacting us. We'll get back to you as soon as possible.",
-        "error_heading": "Please adjust the following:"
+        "title": "お問い合わせフォーム",
+        "name": "お名前",
+        "email": "メールアドレス",
+        "phone": "電話番号",
+        "comment": "お問い合わせ内容",
+        "send": "送信する",
+        "post_success": "お問い合わせいただきありがとうございます。早急に返信いたします。",
+        "error_heading": "以下をご確認ください："
       }
     },
     "404": {

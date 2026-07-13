@@ -34,8 +34,8 @@
   --gray:       rgb(77,65,67);
 
   --nav-h-desktop: 90px;
-  --nav-h-mobile:  76px;
-  --nav-h-tablet:  84px;
+  --nav-h-mobile:  92px;
+  --nav-h-tablet:  92px;
   --padding-wrap-mobile: 20px;
   --padding-wrap-tablet: 40px;
   --content-max:   1200px;
@@ -1140,7 +1140,7 @@ a:hover { color: var(--gold); }
 .card-item-name {
   font-family: "Zen Maru Gothic", sans-serif;
   font-weight: 700;
-  font-size: 22px;
+  font-size: 18px;
   line-height: 1.4;
   color: var(--brick);
   transition: color 0.25s ease;
@@ -1386,9 +1386,13 @@ shopify-accelerated-checkout-cart {
 /* Shopify 組み込みポリシーページ (/policies/*) */
 .shopify-policy__container {
   width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 24px 100px !important;
+}
+.shopify-policy__body {
   max-width: 1220px !important;
   margin: 0 auto !important;
-  padding: 0 !important;
 }
 .shopify-policy__title,
 .shopify-policy__title h1,
@@ -1396,7 +1400,16 @@ shopify-accelerated-checkout-cart {
   color: var(--brick) !important;
   font-family: "Zen Maru Gothic", sans-serif !important;
   font-weight: 700 !important;
-  margin-bottom: 60px !important;
+  padding: 40px 24px 0 !important;
+  margin-bottom: 3rem !important;
+  text-align: center !important;
+}
+@media screen and (max-width: 749px) {
+  .shopify-policy__title,
+  .shopify-policy__title h1,
+  .shopify-policy__title .h1 {
+    margin-bottom: 40px !important;
+  }
 }
 .shopify-policy__body,
 .shopify-policy__body p,
@@ -1409,12 +1422,9 @@ shopify-accelerated-checkout-cart {
 }
 
 /* タイトル */
-.main-page-title {
+.contact__title h1,
+.page__title h1 {
   color: var(--brick) !important;
-  margin-bottom: 60px !important;
-}
-.contact .main-page-title {
-  margin-bottom: 0 !important;
 }
 
 /* コンタクトページ セクション余白 */
@@ -1439,6 +1449,41 @@ shopify-accelerated-checkout-cart {
 .contact .form__label {
   color: var(--brick) !important;
 }
+/* デフォルト：枠線なし・背景白 */
+.contact .field:after,
+.contact .select:after {
+  box-shadow: none !important;
+}
+.contact .field:before,
+.contact .select:before {
+  box-shadow: none !important;
+}
+.contact .field__input,
+.contact .form__input,
+.contact input,
+.contact textarea,
+.contact select {
+  border: none !important;
+  box-shadow: none !important;
+  background-color: #fff !important;
+}
+.contact textarea {
+  border-radius: 20px !important;
+}
+/* フォーカス時：brickカラーで枠線 */
+.contact .field__input:focus,
+.contact .field__input:focus-visible,
+.contact input:focus,
+.contact select:focus {
+  box-shadow: 0 0 0 2px var(--brick) !important;
+  outline: none !important;
+}
+.contact textarea:focus,
+.contact textarea:focus-visible {
+  box-shadow: 0 0 0 2px var(--brick) !important;
+  border-radius: 20px !important;
+  outline: none !important;
+}
 
 /* ============================================================
    SEARCH・コレクション — タイトル・パディングを統一
@@ -1457,6 +1502,48 @@ shopify-accelerated-checkout-cart {
   color: var(--brick) !important;
   font-family: "Zen Maru Gothic", sans-serif !important;
   font-weight: 700 !important;
+}
+
+/* コレクション — フィルター・ソートエリア */
+.facets__summary,
+.facet-filters__sort {
+  background-color: #fff !important;
+  border-radius: 30px !important;
+  padding: 6px 36px 6px 20px !important;
+  border: none !important;
+  box-shadow: none !important;
+  margin-bottom: 0 !important;
+}
+.facets__form {
+  margin-bottom: 20px !important;
+  align-items: center !important;
+}
+.facets__summary .icon-caret,
+.select .svg-wrapper,
+.customer select + .svg-wrapper {
+  right: 14px !important;
+}
+.facet-filters__field .select__select {
+  background-color: #fff !important;
+  border-radius: 30px !important;
+  padding: 6px 32px 6px 16px !important;
+  border: none !important;
+  box-shadow: none !important;
+  min-height: unset !important;
+  height: auto !important;
+}
+.facet-filters__field .select:after,
+.facet-filters__field .select:before {
+  content: none !important;
+}
+
+/* コレクション — カードをグリッドに合わせる */
+.product-grid .card-item {
+  width: 100%;
+}
+.product-grid {
+  --grid-desktop-horizontal-spacing: 36px;
+  --grid-desktop-vertical-spacing: 36px;
 }
 
 /* コレクション（カテゴリ）タイトル */

@@ -1,0 +1,27 @@
+{{ 'section-main-page.css' | asset_url | stylesheet_tag }}
+
+<!-- DEBUG: policy.title={{ policy.title }} / request.path={{ request.path }} -->
+
+{%- assign t = policy.title | downcase -%}
+{%- if t contains 'privacy' -%}
+  {%- assign ja_title = 'プライバシーポリシー' -%}
+{%- elsif t contains 'legal' -%}
+  {%- assign ja_title = '特定商取引法に基づく表記' -%}
+{%- elsif t contains 'terms' -%}
+  {%- assign ja_title = '利用規約' -%}
+{%- elsif t contains 'refund' -%}
+  {%- assign ja_title = '返品・返金ポリシー' -%}
+{%- elsif t contains 'shipping' -%}
+  {%- assign ja_title = '配送ポリシー' -%}
+{%- else -%}
+  {%- assign ja_title = policy.title -%}
+{%- endif -%}
+
+<div class="shopify-policy__container">
+  <div class="shopify-policy__title">
+    <h1 class="main-page-title">{{ ja_title }}</h1>
+  </div>
+  <div class="shopify-policy__body rte">
+    {{ policy.body }}
+  </div>
+</div>
