@@ -1374,6 +1374,123 @@ shopify-accelerated-checkout-cart {
 }
 
 /* ============================================================
+   ページ・ポリシー・コンタクト — 共通デザイン
+   ============================================================ */
+
+/* コンテナ幅・余白 */
+.page-width--narrow {
+  max-width: 1220px !important;
+}
+.page-width.page-width--narrow,
+
+/* Shopify 組み込みポリシーページ (/policies/*) */
+.shopify-policy__container {
+  width: 100% !important;
+  max-width: 1220px !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+}
+.shopify-policy__title,
+.shopify-policy__title h1,
+.shopify-policy__title .h1 {
+  color: var(--brick) !important;
+  font-family: "Zen Maru Gothic", sans-serif !important;
+  font-weight: 700 !important;
+  margin-bottom: 60px !important;
+}
+.shopify-policy__body,
+.shopify-policy__body p,
+.shopify-policy__body li {
+  color: var(--gray) !important;
+  font-family: "Zen Maru Gothic", sans-serif !important;
+}
+.shopify-policy__body h2 {
+  padding-top: 20px !important;
+}
+
+/* タイトル */
+.main-page-title {
+  color: var(--brick) !important;
+  margin-bottom: 60px !important;
+}
+.contact .main-page-title {
+  margin-bottom: 0 !important;
+}
+
+/* コンタクトページ セクション余白 */
+.section-template--20183515594794__main-padding {
+  padding-top: 60px !important;
+  padding-bottom: 40px !important;
+}
+
+/* 本文 */
+.rte,
+.rte p,
+.rte li,
+.rte td {
+  color: var(--gray) !important;
+}
+.rte h1, .rte h2, .rte h3, .rte h4 {
+  color: var(--brick) !important;
+}
+
+/* コンタクトフォーム ラベル・入力 */
+.contact .field__label,
+.contact .form__label {
+  color: var(--brick) !important;
+}
+
+/* ============================================================
+   SEARCH・コレクション — タイトル・パディングを統一
+   ============================================================ */
+
+/* 検索ページ */
+.template-search {
+  padding-top: 100px !important;
+  padding-bottom: 100px !important;
+}
+.template-search__header {
+  padding-bottom: 40px !important;
+}
+.template-search__header h1,
+.template-search__header h2 {
+  color: var(--brick) !important;
+  font-family: "Zen Maru Gothic", sans-serif !important;
+  font-weight: 700 !important;
+}
+
+/* コレクション（カテゴリ）タイトル */
+.collection-hero {
+  padding-top: 60px !important;
+  padding-bottom: 40px !important;
+}
+.collection-hero__title {
+  color: var(--brick) !important;
+  font-family: "Zen Maru Gothic", sans-serif !important;
+  font-weight: 700 !important;
+}
+
+/* コンタクトページ — シンプル構造 */
+.necorepa-contact {
+  width: 100%;
+  padding: 0 24px 100px;
+}
+.necorepa-contact__inner {
+  max-width: 1220px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+.necorepa-contact__title {
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  color: var(--brick);
+  margin: 0;
+}
+
+/* ============================================================
    FOOTER
    ============================================================ */
 .footer {
