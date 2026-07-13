@@ -136,6 +136,26 @@
             </ul>
           </nav>
           <div class="menu-drawer__utility-links">
+            <a
+              href="{{ routes.cart_url }}"
+              class="menu-drawer__cart link focus-inset h5 large-up-hide"
+            >
+              <span class="svg-wrapper">
+                {%- if cart == empty -%}
+                  {{- 'icon-cart-empty.svg' | inline_asset_content -}}
+                {%- else -%}
+                  {{- 'icon-cart.svg' | inline_asset_content -}}
+                {%- endif -%}
+              </span>
+              {{ 'templates.cart.cart' | t }}
+              {%- if cart != empty -%}
+                <span class="cart-count-bubble">
+                  {%- if cart.item_count < 100 -%}
+                    <span>{{ cart.item_count }}</span>
+                  {%- endif -%}
+                </span>
+              {%- endif -%}
+            </a>
             {%- if shop.customer_accounts_enabled -%}
               <a
                 href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"

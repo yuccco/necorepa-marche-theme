@@ -75,6 +75,7 @@
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
   <product-component view-event-payload="{{ product | standard_event_data: 'view', context: 'page' | escape }}">
     <div class="page-width">
+      {% render 'breadcrumb' %}
       <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
         <div class="grid__item product__media-wrapper">
           {% render 'product-media-gallery', variant_images: variant_images %}
@@ -115,21 +116,17 @@
                     </a>
                   </div>
                 {%- when 'price' -%}
-                  <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
-                    {%- render 'price',
-                      product: product,
-                      use_variant: true,
-                      show_badges: true,
-                      price_class: 'price--large'
-                    -%}
-                  </div>
-                  {%- if product.quantity_price_breaks_configured? -%}
-                    <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
-                      <span>{{ 'products.product.volume_pricing.note' | t }}</span>
+                  <div class="product__price-wrapper" {{ block.shopify_attributes }}>
+                    <div id="price-{{ section.id }}" role="status">
+                      {%- render 'price',
+                        product: product,
+                        use_variant: true,
+                        show_badges: true,
+                        price_class: 'price--large'
+                      -%}
                     </div>
-                  {%- endif -%}
-                  {%- if cart.taxes_included or cart.duties_included or shop.shipping_policy.body != blank -%}
-                    <div class="product__tax caption rte">
+                    {%- if cart.taxes_included or cart.duties_included or shop.shipping_policy.body != blank -%}
+                      <div class="product__tax caption rte">
                       {%- if cart.duties_included and cart.taxes_included -%}
                         {{ 'products.product.duties_and_taxes_included' | t }}
                       {%- elsif cart.taxes_included -%}
@@ -140,6 +137,12 @@
                       {%- if shop.shipping_policy.body != blank -%}
                         {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
                       {%- endif -%}
+                      </div>
+                    {%- endif -%}
+                  </div>
+                  {%- if product.quantity_price_breaks_configured? -%}
+                    <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
+                      <span>{{ 'products.product.volume_pricing.note' | t }}</span>
                     </div>
                   {%- endif -%}
                   <div {{ block.shopify_attributes }}>

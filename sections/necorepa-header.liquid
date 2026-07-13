@@ -52,18 +52,12 @@
   <div class="nav-mobile-inner">
     <div class="nav-logo">
       <a href="{{ routes.root_url }}">
-        <img src="{{ 'logo-brick.svg' | asset_url }}" alt="ネコリパマルシェ" width="120">
+        <img src="{{ 'logo-brick.svg' | asset_url }}" alt="ネコリパマルシェ" width="100">
       </a>
       <span class="nav-logo-with">with</span>
-      <img src="{{ 'logo_nekoichi-brick.svg' | asset_url }}" alt="ネコ市ネコ座" width="120">
+      <img src="{{ 'logo_nekoichi-brick.svg' | asset_url }}" alt="ネコ市ネコ座" width="100">
     </div>
     <div style="display:flex;align-items:center;gap:12px;">
-      <a href="{{ routes.cart_url }}" class="nav-icon-btn" aria-label="カート">
-        <i class="fa-solid fa-cart-shopping"></i>
-        {%- if cart.item_count > 0 -%}
-          <span class="nav-cart-count">{{ cart.item_count }}</span>
-        {%- endif -%}
-      </a>
       <button class="hamburger" aria-label="メニューを開閉する" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -84,6 +78,13 @@
         <a href="{{ link.url }}">{{ link.title }}</a>
       {%- endif -%}
     {%- endfor -%}
+    <a href="{{ routes.cart_url }}" class="nav-mobile-cart">
+      <i class="fa-solid fa-cart-shopping"></i>
+      カート
+      {%- if cart.item_count > 0 -%}
+        <span class="nav-cart-count-inline">{{ cart.item_count }}</span>
+      {%- endif -%}
+    </a>
   </nav>
 </header>
 
@@ -110,6 +111,26 @@
     line-height: 1;
   }
   .nav-icon-btn { position: relative; }
+  .nav-mobile-cart {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 24px;
+    border-top: 1px solid rgba(107, 20, 39, 0.2);
+    margin-top: 8px;
+  }
+  .nav-mobile-cart i {
+    font-size: 18px;
+  }
+  .nav-cart-count-inline {
+    background: var(--gold);
+    color: var(--brick);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: auto;
+  }
 {% endstylesheet %}
 
 {% schema %}

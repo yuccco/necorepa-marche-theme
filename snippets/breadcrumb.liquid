@@ -1,0 +1,66 @@
+{% comment %}
+  パンくずリスト
+  商品ページ: HOME > コレクション > 商品名
+  コレクションページ: HOME > コレクション
+{% endcomment %}
+
+<nav class="breadcrumb" aria-label="パンくずリスト">
+  <ol class="breadcrumb__list">
+    <li class="breadcrumb__item">
+      <a href="/" class="breadcrumb__link">HOME</a>
+    </li>
+
+    {%- if template.name == 'product' -%}
+      {%- if product.collections.size > 0 -%}
+        {%- assign current_collection = product.collections | first -%}
+
+        {%- comment -%} 親コレクションがあれば表示（メタフィールドで設定） {%- endcomment -%}
+        {%- if current_collection.metafields.custom.parent_collection -%}
+          {%- assign parent = current_collection.metafields.custom.parent_collection.value -%}
+          {%- if parent.metafields.custom.parent_collection -%}
+            {%- assign grandparent = parent.metafields.custom.parent_collection.value -%}
+            <li class="breadcrumb__item">
+              <span class="breadcrumb__separator">></span>
+              <a href="{{ grandparent.url }}" class="breadcrumb__link">{{ grandparent.title }}</a>
+            </li>
+          {%- endif -%}
+          <li class="breadcrumb__item">
+            <span class="breadcrumb__separator">></span>
+            <a href="{{ parent.url }}" class="breadcrumb__link">{{ parent.title }}</a>
+          </li>
+        {%- endif -%}
+
+        <li class="breadcrumb__item">
+          <span class="breadcrumb__separator">></span>
+          <a href="{{ current_collection.url }}" class="breadcrumb__link">{{ current_collection.title }}</a>
+        </li>
+      {%- endif -%}
+
+      <li class="breadcrumb__item breadcrumb__item--current">
+        <span class="breadcrumb__separator">></span>
+        <span class="breadcrumb__current">{{ product.title }}</span>
+      </li>
+
+    {%- elsif template.name == 'collection' -%}
+      {%- if collection.metafields.custom.parent_collection -%}
+        {%- assign parent = collection.metafields.custom.parent_collection.value -%}
+        {%- if parent.metafields.custom.parent_collection -%}
+          {%- assign grandparent = parent.metafields.custom.parent_collection.value -%}
+          <li class="breadcrumb__item">
+            <span class="breadcrumb__separator">></span>
+            <a href="{{ grandparent.url }}" class="breadcrumb__link">{{ grandparent.title }}</a>
+          </li>
+        {%- endif -%}
+        <li class="breadcrumb__item">
+          <span class="breadcrumb__separator">></span>
+          <a href="{{ parent.url }}" class="breadcrumb__link">{{ parent.title }}</a>
+        </li>
+      {%- endif -%}
+
+      <li class="breadcrumb__item breadcrumb__item--current">
+        <span class="breadcrumb__separator">></span>
+        <span class="breadcrumb__current">{{ collection.title }}</span>
+      </li>
+    {%- endif -%}
+  </ol>
+</nav>

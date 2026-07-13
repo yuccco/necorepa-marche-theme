@@ -10,44 +10,33 @@
     share_link: share_url
   %}
 {% endcomment %}
-<script src="{{ 'share.js' | asset_url }}" defer="defer"></script>
 
-<share-button id="Share-{{ section.id }}" class="share-button quick-add-hidden" {{ block.shopify_attributes }}>
-  <button class="share-button__button hidden">
-    <span class="svg-wrapper">{{ 'icon-share.svg' | inline_asset_content }}</span>
-    {{ block.settings.share_label | escape }}
-  </button>
-  <details id="Details-{{ block.id }}-{{ section.id }}">
-    <summary class="share-button__button">
-      <span class="svg-wrapper">{{ 'icon-share.svg' | inline_asset_content }}</span>
-      {{ block.settings.share_label | escape }}
-    </summary>
-    <div class="share-button__fallback motion-reduce">
-      <div class="field">
-        <span id="ShareMessage-{{ section.id }}" class="share-button__message hidden" role="status"> </span>
-        <input
-          type="text"
-          class="field__input"
-          id="ShareUrl-{{ section.id }}"
-          value="{{ share_link }}"
-          placeholder="{{ 'general.share.share_url' | t }}"
-          onclick="this.select();"
-          readonly
-        >
-        <label class="field__label" for="ShareUrl-{{ section.id }}">{{ 'general.share.share_url' | t }}</label>
-      </div>
-      <button class="share-button__close hidden">
-        <span class="svg-wrapper">
-          {{- 'icon-close.svg' | inline_asset_content -}}
-        </span>
-        <span class="visually-hidden">{{ 'general.share.close' | t }}</span>
+<div class="share-buttons" {{ block.shopify_attributes }}>
+  <ul class="share-buttons__list">
+    <li class="share-buttons__item">
+      <button type="button" class="share-buttons__link share-buttons__link--copy" aria-label="URLをコピー" data-copy-url="{{ share_link }}">
+        <span class="svg-wrapper">{{ 'icon-copy.svg' | inline_asset_content }}</span>
       </button>
-      <button class="share-button__copy">
-        <span class="svg-wrapper">
-          {{- 'icon-copy.svg' | inline_asset_content -}}
-        </span>
-        <span class="visually-hidden">{{ 'general.share.copy_to_clipboard' | t }}</span>
-      </button>
-    </div>
-  </details>
-</share-button>
+    </li>
+    <li class="share-buttons__item">
+      <a href="https://twitter.com/intent/tweet?url={{ share_link | url_encode }}&text={{ product.title | url_encode }}" target="_blank" rel="noopener noreferrer" class="share-buttons__link share-buttons__link--x" aria-label="Xでシェア">
+        <span class="svg-wrapper">{{ 'icon-twitter.svg' | inline_asset_content }}</span>
+      </a>
+    </li>
+    <li class="share-buttons__item">
+      <a href="https://www.facebook.com/sharer/sharer.php?u={{ share_link | url_encode }}" target="_blank" rel="noopener noreferrer" class="share-buttons__link share-buttons__link--facebook" aria-label="Facebookでシェア">
+        <span class="svg-wrapper">{{ 'icon-facebook.svg' | inline_asset_content }}</span>
+      </a>
+    </li>
+  </ul>
+</div>
+<script>
+  document.querySelectorAll('.share-buttons__link--copy').forEach(btn => {
+    btn.addEventListener('click', () => {
+      navigator.clipboard.writeText(btn.dataset.copyUrl).then(() => {
+        btn.classList.add('copied');
+        setTimeout(() => btn.classList.remove('copied'), 2000);
+      });
+    });
+  });
+</script>
